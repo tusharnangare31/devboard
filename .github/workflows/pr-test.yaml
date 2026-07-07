@@ -1,0 +1,27 @@
+name: ci
+on: 
+  push:
+    branches:[main]
+      
+jobs:
+  code: 
+    run_on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+      - name: setup node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20
+          cache: "npm"
+          cache-dependency-path: ./frontend/package-lock.json
+
+      - name: Install npm
+        run: npm ci
+      
+      - name: Lint
+        run: npm run lint
+
+      - name : Test
+        run: npm run test
+        
